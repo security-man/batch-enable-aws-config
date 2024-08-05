@@ -17,7 +17,7 @@ The script will prompt you for the following inputs:
 - list of AWS Account IDs to enable AWS config for, separated by commas (e.g., "123456781234,123456781235,123456781236,...")
 - region to enable config (default setting is "eu-west-2")
 - config recorder name (default setting is "default")
-- config S3 bucket name (default setting is "config-bucket-<AWSACCOUNTID>")
+- config S3 bucket name (default setting is "config-bucket-111111111111" (111111111111 represents Account ID))
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
