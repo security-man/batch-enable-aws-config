@@ -105,10 +105,10 @@ def enable_config(profile,account_id,region,config_name,bucket_prefix):
 def main():
     profiles = get_profiles()
     region = get_region()
-    config_name = input('Enter name for config recorder. Default is "default"')
+    config_name = input('Enter name for config recorder. (hit Enter for default name "default")')
     if config_name == '':
         config_name == "default"
-    bucket_prefix = input('Enter name for S3 config delivery bucket prefix. Default is "config-bucket-"')
+    bucket_prefix = input('Enter name for S3 config delivery bucket prefix. (hit Enter for default name "config-bucket-")')
     if bucket_prefix == '':
         bucket_prefix = "config-bucket-"
     for profile in profiles:
