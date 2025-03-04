@@ -96,7 +96,7 @@ def enable_config(profile,account_id,region,config_name,bucket_prefix):
         )
         config_client.start_configuration_recorder(ConfigurationRecorderName=config_name)
     except ClientError:
-        logging.error("Couldn't create config delivery channe;, config delivery channel already exists in this account.")
+        logging.error("Couldn't create config delivery channel, config delivery channel already exists in this account.")
 
 def check_config_enabled(account_id,profile):
     session = boto3.Session(profile_name = profile)
