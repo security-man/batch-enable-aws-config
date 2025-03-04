@@ -98,8 +98,7 @@ def enable_config(profile,account_id,region,config_name,bucket_prefix):
     except ClientError:
         logging.error("Couldn't create config delivery channe;, config delivery channel already exists in this account.")
 
-def check_config_enabled(account_id):
-    profile = account_id + '-RO'
+def check_config_enabled(account_id,profile):
     session = boto3.Session(profile_name = profile)
     config_client_eu_west_2 = session.client("config","eu-west-2")
     config_client_eu_west_1 = session.client("config","eu-west-1")
@@ -120,7 +119,8 @@ def organisation_tidy(config_name,bucket_prefix):
     session = boto3.Session(profile_name="default")
     client = session.client('sts')
     org = session.client('organizations')
-
+    roots = org.list_roots()
+    root_account = (roots['Roots'][0]['Arn']).split(":")[4]
     # paginate through all org accounts
     paginator = org.get_paginator('list_accounts')
     page_iterator = paginator.paginate()
@@ -136,8 +136,12 @@ def organisation_tidy(config_name,bucket_prefix):
     print("Account list populated!")
     print("")
     for account in account_ids:
-        profile = account + "-Admin"
-        status = check_config_enabled(account)
+        if(account == root_account):
+            profile = "default"
+            status = check_config_enabled(account,profile)
+        else:
+            profile = account + "-RO"
+            status = check_config_enabled(account,profile)
         if(status == 2):
             enable_config(profile,account,"eu-west-2",config_name,bucket_prefix)
             print("Config enabled for " + account + " region  = eu-west-2")
