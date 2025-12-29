@@ -117,7 +117,6 @@ def check_config_enabled(account_id,profile):
 def organisation_tidy(config_name,bucket_prefix):
     # establish client with root account (default profile)
     session = boto3.Session(profile_name="default")
-    client = session.client('sts')
     org = session.client('organizations')
     roots = org.list_roots()
     root_account = (roots['Roots'][0]['Arn']).split(":")[4]
@@ -143,16 +142,19 @@ def organisation_tidy(config_name,bucket_prefix):
             profile = account + "-RO"
             status = check_config_enabled(account,profile)
         if(status == 2):
-            enable_config(profile,account,"eu-west-2",config_name,bucket_prefix)
-            print("Config enabled for " + account + " region  = eu-west-2")
+            #enable_config(profile,account,"eu-west-2",config_name,bucket_prefix)
+            print("Config NOT enabled for " + account + " region  = eu-west-2")
+            # print(account + ",eu-west-2")
         elif(status == -1):
-            enable_config(profile,account,"eu-west-1",config_name,bucket_prefix)
-            print("Config enabled for " + account + " region  = eu-west-1")
+            #enable_config(profile,account,"eu-west-1",config_name,bucket_prefix)
+            print("Config NOT enabled for " + account + " region  = eu-west-1")
+            # print(account + ",eu-west-1")
         elif(status == 1):
-            enable_config(profile,account,"eu-west-2",config_name,bucket_prefix)
-            print("Config enabled for " + account + " region  = eu-west-2")
-            enable_config(profile,account,"eu-west-1",config_name,bucket_prefix)
-            print("Config enabled for " + account + " region  = eu-west-1")
+            #enable_config(profile,account,"eu-west-2",config_name,bucket_prefix)
+            print("Config NOT enabled for " + account + " region  = eu-west-2")
+            #enable_config(profile,account,"eu-west-1",config_name,bucket_prefix)
+            print("Config NOT enabled for " + account + " region  = eu-west-1")
+            # print(account + ",eu-west-2,eu-west-1")
 
 def enable_specific_accounts():
     profiles = get_profiles()
